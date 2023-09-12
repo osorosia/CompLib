@@ -4,28 +4,20 @@ namespace CompLib.DataStructure
 {
     public class UnionFind
     {
-        long[] _parent;
-        long[] _size;
-        long _n;
+        private long[] _Parent;
+        private long[] _Size;
+        private long _N;
 
         public UnionFind(long n)
         {
-            _parent = new long[n];
-            _size = new long[n];
-            _n = n;
+            _Parent = new long[n];
+            _Size = new long[n];
+            _N = n;
             for (long i = 0; i < n; i++)
             {
-                _size[i] = 1;
-                _parent[i] = i;
+                _Size[i] = 1;
+                _Parent[i] = i;
             }
-        }
-
-        public long Find(long x)
-        {
-            if (x == _parent[x])
-                return x;
-            _parent[x] = Find(_parent[x]);
-            return _parent[x];
         }
 
         public bool Same(long x, long y)
@@ -39,17 +31,17 @@ namespace CompLib.DataStructure
             y = Find(y);
             if (x == y)
                 return false;
-            if (_size[x] < _size[y])
+            if (_Size[x] < _Size[y])
                 (x, y) = (y, x);
-            _size[x] += _size[y];
-            _parent[y] = x;
+            _Size[x] += _Size[y];
+            _Parent[y] = x;
             return true;
         }
 
         public List<long> Roots()
         {
             var st = new SortedSet<long>();
-            for (int i = 0; i < _n; i++)
+            for (int i = 0; i < _N; i++)
                 st.Add(Find(i));
 
             var ls = new List<long>();
@@ -63,15 +55,23 @@ namespace CompLib.DataStructure
         {
             var mp = new SortedDictionary<long, List<long>>();
 
-            for (long i = 0; i < _n; i++)
+            for (long i = 0; i < _N; i++)
             {
                 Find(i);
-                if (!mp.ContainsKey(_parent[i]))
-                    mp.Add(_parent[i], new List<long>());
-                mp[_parent[i]].Add(i);
+                if (!mp.ContainsKey(_Parent[i]))
+                    mp.Add(_Parent[i], new List<long>());
+                mp[_Parent[i]].Add(i);
             }
 
             return mp;
+        }
+
+        private long Find(long x)
+        {
+            if (x == _Parent[x])
+                return x;
+            _Parent[x] = Find(_Parent[x]);
+            return _Parent[x];
         }
     }
 }
