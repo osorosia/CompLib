@@ -4,74 +4,67 @@ namespace CompLib.DataStructure
 {
     public class UnionFind
     {
-        private long[] _Parent;
-        private long[] _Size;
-        private long _N;
+        private int[] _Parents;
+        private int[] _Size;
+        private int _N;
 
-        public UnionFind(long n)
+        public UnionFind(int n)
         {
-            _Parent = new long[n];
-            _Size = new long[n];
+            _Parents = new int[n];
+            _Size = new int[n];
             _N = n;
-            for (long i = 0; i < n; i++)
+
+            for (int i = 0; i < n; i++)
             {
                 _Size[i] = 1;
-                _Parent[i] = i;
+                _Parents[i] = i;
             }
         }
 
-        public bool Same(long x, long y)
+        public bool Same(int x, int y)
         {
             return Find(x) == Find(y);
         }
 
-        public bool Merge(long x, long y)
+        public bool Merge(int x, int y)
         {
             x = Find(x);
             y = Find(y);
-            if (x == y)
-                return false;
+
+            if (x == y) return false;
+
             if (_Size[x] < _Size[y])
+            {
                 (x, y) = (y, x);
+            }
+
             _Size[x] += _Size[y];
-            _Parent[y] = x;
+            _Parents[y] = x;
+
             return true;
         }
 
-        public List<long> Roots()
+        public int[] Roots()
         {
-            var st = new SortedSet<long>();
-            for (int i = 0; i < _N; i++)
-                st.Add(Find(i));
-
-            var ls = new List<long>();
-            foreach (var s in st)
-                ls.Add(s);
-
-            return ls;
+            return _Parents.Distinct().OrderBy(x => x).ToArray();
         }
 
-        public SortedDictionary<long, List<long>> Groups()
+        public Dictionary<int, int[]> Groups()
         {
-            var mp = new SortedDictionary<long, List<long>>();
+            var dic = Enumerable.Range(0, _N)
+                .Select(i => (Index: i, Parent: Find(i)))
+                .GroupBy(p => p.Parent, p => p.Index)
+                .ToDictionary(g => g.Key, g => g.ToArray());
 
-            for (long i = 0; i < _N; i++)
-            {
-                Find(i);
-                if (!mp.ContainsKey(_Parent[i]))
-                    mp.Add(_Parent[i], new List<long>());
-                mp[_Parent[i]].Add(i);
-            }
-
-            return mp;
+            return dic;
         }
 
-        private long Find(long x)
+        private int Find(int x)
         {
-            if (x == _Parent[x])
+            if (x == _Parents[x])
                 return x;
-            _Parent[x] = Find(_Parent[x]);
-            return _Parent[x];
+            _Parents[x] = Find(_Parents[x]);
+            return _Parents[x];
         }
     }
 }
