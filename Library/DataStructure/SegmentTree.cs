@@ -16,7 +16,7 @@ namespace CompLib.DataStructure
             while (n < arr.Length) n *= 2;
 
             _N = n;
-            _Array = new long[2 * n - 1];
+            _Array = new long[2 * _N - 1];
 
             for (var i = 0; i < _N - 1; i++)
             {
@@ -29,7 +29,7 @@ namespace CompLib.DataStructure
 
             for (var i = _N - 2; i >= 0; i--)
             {
-                _Array[i] = Math.Min(_Array[i * 2 + 1], _Array[i * 2 + 2]);
+                _Array[i] = Math.Min(_Array[ToLeftChild(i)], _Array[ToRightChild(i)]);
             }
         }
 
