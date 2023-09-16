@@ -1,5 +1,3 @@
-using System;
-
 namespace CompLib.DataStructure
 {
     public enum SegmentTreeType

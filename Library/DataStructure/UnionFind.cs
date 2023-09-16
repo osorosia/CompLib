@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CompLib.DataStructure
+﻿namespace CompLib.DataStructure
 {
     public class UnionFind
     {

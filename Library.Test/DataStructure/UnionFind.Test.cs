@@ -1,6 +1,3 @@
-using Xunit;
-using CompLib.DataStructure;
-
 namespace CompLib.Test.DataStructure;
 
 public class UnionFindTest
