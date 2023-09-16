@@ -1,2 +1,2 @@
 run:
-	dotnet test
+	dotnet test --nologo
