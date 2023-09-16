@@ -4,11 +4,14 @@ namespace CompLib.DataStructure
 {
     public class SegmentTree
     {
+        private int _OriginSize;
         private int _N;
         private long[] _Array;
 
         public SegmentTree(long[] arr)
         {
+            _OriginSize = arr.Length;
+
             var n = 1;
             while (n < arr.Length) n *= 2;
 
@@ -35,6 +38,8 @@ namespace CompLib.DataStructure
         /// </summary>
         public void Update(int i, long x)
         {
+            if (i < 0 || _OriginSize <= i) throw new IndexOutOfRangeException();
+
             _Array[i + _N - 1] = x;
 
             while (i > 0)
@@ -49,6 +54,10 @@ namespace CompLib.DataStructure
         /// </summary>
         public long Query(int left, int right)
         {
+            if (left < 0 || _OriginSize < left) throw new IndexOutOfRangeException();
+            if (right < 0 || _OriginSize < right) throw new IndexOutOfRangeException();
+            if (left >= right) throw new IndexOutOfRangeException();
+
             return QueryHelper(left, right, 0, 0, _N);
         }
 
