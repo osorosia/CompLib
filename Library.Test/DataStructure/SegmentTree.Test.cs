@@ -10,7 +10,7 @@ public class SegmentTreeTest
     {
         {
             // 10 11 12 13 14
-            var st = new SegmentTree(new long[] { 10, 11, 12, 13, 14 });
+            var st = new SegmentTree(SegmentTreeType.RmQ, new long[] { 10, 11, 12, 13, 14 });
 
             Assert.Equal(10, st.Query(0, 1));
             Assert.Equal(10, st.Query(0, 2));
@@ -26,7 +26,7 @@ public class SegmentTreeTest
 
         {
             // 10 11 12 13
-            var st = new SegmentTree(new long[] { 10, 11, 12, 13 });
+            var st = new SegmentTree(SegmentTreeType.RmQ, new long[] { 10, 11, 12, 13 });
 
             Assert.Equal(10, st.Query(0, 1));
             Assert.Equal(10, st.Query(0, 2));

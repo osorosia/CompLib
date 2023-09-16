@@ -2,13 +2,21 @@ using System;
 
 namespace CompLib.DataStructure
 {
+    public enum SegmentTreeType
+    {
+        RmQ,
+        // RMQ,
+        // RSQ,
+        // RAQ,
+    }
+
     public class SegmentTree
     {
         private int _OriginSize;
         private int _N;
         private long[] _Array;
 
-        public SegmentTree(long[] arr)
+        public SegmentTree(SegmentTreeType type, long[] arr)
         {
             _OriginSize = arr.Length;
 
