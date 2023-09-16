@@ -40,12 +40,14 @@ namespace CompLib.DataStructure
         {
             if (i < 0 || _OriginSize <= i) throw new IndexOutOfRangeException();
 
-            _Array[i + _N - 1] = x;
+            i += _N - 1;
+
+            _Array[i] = x;
 
             while (i > 0)
             {
-                i = (i - 1) / 2;
-                _Array[i] = Math.Min(_Array[i * 2 + 1], _Array[i * 2 + 2]);
+                i = ToParent(i);
+                _Array[i] = Math.Min(_Array[ToLeftChild(i)], _Array[ToRightChild(i)]);
             }
         }
 
@@ -70,5 +72,11 @@ namespace CompLib.DataStructure
             var vr = QueryHelper(left, right, k * 2 + 2, (l + r) / 2, r);
             return Math.Min(vl, vr);
         }
+
+        private int ToParent(int i) => (i - 1) / 2;
+
+        private int ToLeftChild(int i) => i * 2 + 1;
+
+        private int ToRightChild(int i) => i * 2 + 2;
     }
 }
