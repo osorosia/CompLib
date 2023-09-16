@@ -21,7 +21,7 @@ namespace CompLib.DataStructure
             }
         }
 
-        public bool Same(int x, int y)
+        public bool IsSame(int x, int y)
         {
             return Find(x) == Find(y);
         }
