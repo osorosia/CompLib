@@ -48,6 +48,18 @@ public class SegmentTreeTest
             Assert.Equal(10, st.Query(0, 1));
             Assert.Equal(10, st.Query(0, 2));
             Assert.Equal(10, st.Query(0, 3));
+
+            // 10 11 12 13
+            st.Update(3, 13);
+
+            Assert.Equal(10, st.Query(0, 1));
+            Assert.Equal(10, st.Query(0, 2));
+            Assert.Equal(10, st.Query(0, 3));
+            Assert.Equal(10, st.Query(0, 4));
+
+            Assert.Equal(11, st.Query(1, 2));
+            Assert.Equal(12, st.Query(2, 3));
+            Assert.Equal(13, st.Query(3, 4));
         }
     }
 }

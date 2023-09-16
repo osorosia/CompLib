@@ -18,13 +18,13 @@ namespace CompLib.DataStructure
             _N = n;
             _Array = new long[2 * _N - 1];
 
-            for (var i = 0; i < _N - 1; i++)
+            for (var i = _N - 1; i < _Array.Length; i++)
             {
-                _Array[i] = long.MaxValue;
-            }
-            for (var i = 0; i < arr.Length; i++)
-            {
-                _Array[i + n - 1] = arr[i];
+                var arrIdx = i - (_N - 1);
+
+                _Array[i] = arrIdx < arr.Length
+                    ? arr[arrIdx]
+                    : long.MaxValue;
             }
 
             for (var i = _N - 2; i >= 0; i--)
