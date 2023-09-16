@@ -41,6 +41,12 @@ namespace CompLib.DataStructure
             }
         }
 
+        public long this[int i]
+        {
+            get => _Array[i + _N - 1];
+            set => Update(i, value);
+        }
+
         /// <summary>
         /// Update value at index i to x.
         /// </summary>

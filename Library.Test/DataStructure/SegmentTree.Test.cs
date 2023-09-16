@@ -11,6 +11,10 @@ public class SegmentTreeTest
         {
             // 10 11 12 13 14
             var st = new SegmentTree(SegmentTreeType.RmQ, new long[] { 10, 11, 12, 13, 14 });
+            Assert.Equal(
+                new long[] { 10, 11, 12, 13, 14 },
+                new[] { st[0], st[1], st[2], st[3], st[4] }
+            );
 
             Assert.Equal(10, st.Query(0, 1));
             Assert.Equal(10, st.Query(0, 2));
@@ -27,6 +31,10 @@ public class SegmentTreeTest
         {
             // 10 11 12 13
             var st = new SegmentTree(SegmentTreeType.RmQ, new long[] { 10, 11, 12, 13 });
+            Assert.Equal(
+                new long[] { 10, 11, 12, 13 },
+                new[] { st[0], st[1], st[2], st[3] }
+            );
 
             Assert.Equal(10, st.Query(0, 1));
             Assert.Equal(10, st.Query(0, 2));
@@ -38,7 +46,11 @@ public class SegmentTreeTest
             Assert.Equal(13, st.Query(3, 4));
 
             // 10 11 12 -1
-            st.Update(3, -1);
+            st[3] = -1;
+            Assert.Equal(
+                new long[] { 10, 11, 12, -1 },
+                new[] { st[0], st[1], st[2], st[3] }
+            );
 
             Assert.Equal(-1, st.Query(0, 4));
             Assert.Equal(-1, st.Query(1, 4));
@@ -50,7 +62,11 @@ public class SegmentTreeTest
             Assert.Equal(10, st.Query(0, 3));
 
             // 10 11 12 13
-            st.Update(3, 13);
+            st[3] = 13;
+            Assert.Equal(
+                new long[] { 10, 11, 12, 13 },
+                new[] { st[0], st[1], st[2], st[3] }
+            );
 
             Assert.Equal(10, st.Query(0, 1));
             Assert.Equal(10, st.Query(0, 2));
