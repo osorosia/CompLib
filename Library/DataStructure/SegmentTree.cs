@@ -2,9 +2,9 @@ namespace CompLib.DataStructure
 {
     public enum SegmentTreeType
     {
-        RmQ,
-        // RMQ,
-        // RSQ,
+        RmQ, // Range Minimum Query
+        RMQ, // Range Maximum Query
+        RSQ, // Range Sum Query
         // RAQ,
     }
 
@@ -17,19 +17,23 @@ namespace CompLib.DataStructure
 
         private Func<long, long, long> Combine;
 
+        private (long, Func<long, long, long>) Config(SegmentTreeType type)
+        {
+            return type switch
+            {
+                SegmentTreeType.RmQ => (long.MaxValue, Math.Min),
+                SegmentTreeType.RMQ => (long.MinValue, Math.Max),
+                SegmentTreeType.RSQ => (0, (x, y) => x + y),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
         public SegmentTree(SegmentTreeType type, long[] arr)
         {
-            _Identity = type switch
-            {
-                SegmentTreeType.RmQ => long.MaxValue,
-                _ => throw new NotImplementedException(),
-            };
+            var (identity, combine) = Config(type);
 
-            Combine = type switch
-            {
-                SegmentTreeType.RmQ => Math.Min,
-                _ => throw new NotImplementedException(),
-            };
+            _Identity = identity;
+            Combine = combine;
 
             _OriginSize = arr.Length;
 
@@ -92,7 +96,7 @@ namespace CompLib.DataStructure
 
         private long QueryHelper(int left, int right, int k, int l, int r)
         {
-            if (r <= left || right <= l) return long.MaxValue;
+            if (r <= left || right <= l) return _Identity;
             if (left <= l && r <= right) return _Array[k];
 
             var vl = QueryHelper(left, right, k * 2 + 1, l, (l + r) / 2);
