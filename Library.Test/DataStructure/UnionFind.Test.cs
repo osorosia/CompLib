@@ -18,7 +18,7 @@ namespace CompLib.Test.DataStructure
 
             Assert.False(uf.Merge(0, 1));
 
-            // Same
+            // IsSame
             Assert.True(uf.IsSame(0, 1));
             Assert.True(uf.IsSame(0, 2));
             Assert.True(uf.IsSame(0, 3));
