@@ -13,9 +13,24 @@ namespace CompLib.DataStructure
         private int _OriginSize;
         private int _N;
         private long[] _Array;
+        private long _Identity;
+
+        private Func<long, long, long> Combine;
 
         public SegmentTree(SegmentTreeType type, long[] arr)
         {
+            _Identity = type switch
+            {
+                SegmentTreeType.RmQ => long.MaxValue,
+                _ => throw new NotImplementedException(),
+            };
+
+            Combine = type switch
+            {
+                SegmentTreeType.RmQ => Math.Min,
+                _ => throw new NotImplementedException(),
+            };
+
             _OriginSize = arr.Length;
 
             var n = 1;
@@ -30,12 +45,12 @@ namespace CompLib.DataStructure
 
                 _Array[i] = arrIdx < arr.Length
                     ? arr[arrIdx]
-                    : long.MaxValue;
+                    : _Identity;
             }
 
             for (var i = _N - 2; i >= 0; i--)
             {
-                _Array[i] = Math.Min(_Array[ToLeftChild(i)], _Array[ToRightChild(i)]);
+                _Array[i] = Combine(_Array[ToLeftChild(i)], _Array[ToRightChild(i)]);
             }
         }
 
@@ -59,7 +74,7 @@ namespace CompLib.DataStructure
             while (i > 0)
             {
                 i = ToParent(i);
-                _Array[i] = Math.Min(_Array[ToLeftChild(i)], _Array[ToRightChild(i)]);
+                _Array[i] = Combine(_Array[ToLeftChild(i)], _Array[ToRightChild(i)]);
             }
         }
 
@@ -82,7 +97,7 @@ namespace CompLib.DataStructure
 
             var vl = QueryHelper(left, right, k * 2 + 1, l, (l + r) / 2);
             var vr = QueryHelper(left, right, k * 2 + 2, (l + r) / 2, r);
-            return Math.Min(vl, vr);
+            return Combine(vl, vr);
         }
 
         private int ToParent(int i) => (i - 1) / 2;
