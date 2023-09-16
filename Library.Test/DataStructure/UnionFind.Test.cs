@@ -19,12 +19,12 @@ namespace CompLib.Test.DataStructure
             Assert.False(uf.Merge(0, 1));
 
             // Same
-            Assert.True(uf.Same(0, 1));
-            Assert.True(uf.Same(0, 2));
-            Assert.True(uf.Same(0, 3));
-            Assert.True(uf.Same(4, 5));
+            Assert.True(uf.IsSame(0, 1));
+            Assert.True(uf.IsSame(0, 2));
+            Assert.True(uf.IsSame(0, 3));
+            Assert.True(uf.IsSame(4, 5));
 
-            Assert.False(uf.Same(0, 4));
+            Assert.False(uf.IsSame(0, 4));
         }
     }
 }
