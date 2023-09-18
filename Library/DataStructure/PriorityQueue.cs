@@ -36,6 +36,7 @@ namespace CompLib.DataStructure
             else
             {
                 (_Heap[0], _Heap[_Heap.Count - 1]) = (_Heap[_Heap.Count - 1], _Heap[0]);
+                _Heap.RemoveAt(_Heap.Count - 1);
                 var k = Down(0);
                 Up(k);
             }
@@ -56,6 +57,7 @@ namespace CompLib.DataStructure
             else
             {
                 (_Heap[1], _Heap[_Heap.Count - 1]) = (_Heap[_Heap.Count - 1], _Heap[1]);
+                _Heap.RemoveAt(_Heap.Count - 1);
                 var k = Down(1);
                 Up(k);
             }
