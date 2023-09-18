@@ -7,7 +7,7 @@ namespace CompLib
             return a / Gcd(a, b) * b;
         }
 
-        public static long LcmArray(long[] a)
+        public static long Lcm(long[] a)
         {
             long l = a[0];
             for (int i = 1; i < a.Length; i++)
