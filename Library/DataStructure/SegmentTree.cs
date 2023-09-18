@@ -21,8 +21,8 @@ namespace CompLib.DataStructure
         {
             return type switch
             {
-                SegmentTreeType.RmQ => (long.MaxValue, Math.Min),
-                SegmentTreeType.RMQ => (long.MinValue, Math.Max),
+                SegmentTreeType.RmQ => (long.MaxValue, System.Math.Min),
+                SegmentTreeType.RMQ => (long.MinValue, System.Math.Max),
                 SegmentTreeType.RSQ => (0, (x, y) => x + y),
                 _ => throw new NotImplementedException(),
             };
