@@ -2,6 +2,9 @@ namespace CompLib.DataStructure
 {
     public class PriorityQueue
     {
+        // Interval Heap
+        // https://natsugiri.hatenablog.com/entry/2016/10/10/035445
+
         List<long> _Heap;
 
         public PriorityQueue()
