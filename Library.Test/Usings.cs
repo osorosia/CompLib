@@ -1,4 +1,4 @@
 global using Xunit;
 global using CompLib.DataStructure;
-global using static CompLib.Math;
-global using static CompLib.String;
+global using static CompLib.MathLib;
+global using static CompLib.StringLib;

@@ -1,6 +1,6 @@
 namespace CompLib
 {
-    public static partial class String
+    public static partial class StringLib
     {
         public static int[] ZAlgorithm(string s)
         {

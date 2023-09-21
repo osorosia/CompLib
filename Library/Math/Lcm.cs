@@ -1,6 +1,6 @@
 namespace CompLib
 {
-    public static partial class Math
+    public static partial class MathLib
     {
         public static long Lcm(long a, long b)
         {
