@@ -1,8 +1,5 @@
 namespace CompLib.Util
 {
-    using System;
-    using System.Linq;
-
     class Scanner
     {
         private string[] _line;
