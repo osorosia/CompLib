@@ -2,18 +2,20 @@
 // https://natsugiri.hatenablog.com/entry/2016/10/10/035445
 namespace CompLib.DataStructure
 {
-    public class PriorityQueue
+    public class PriorityQueue<T>
     {
-        List<long> _Heap;
+        List<(long key, T data)> _Heap;
+        Func<T, long> _Func;
 
-        public PriorityQueue()
+        public PriorityQueue(Func<T, long> f)
         {
-            _Heap = new List<long>();
+            _Heap = new List<(long key, T data)>();
+            _Func = f;
         }
 
-        public void Push(long x)
+        public void Push(T x)
         {
-            _Heap.Add(x);
+            _Heap.Add((_Func(x), x));
             Up(_Heap.Count - 1);
         }
 
@@ -21,11 +23,11 @@ namespace CompLib.DataStructure
 
         public int Count() => _Heap.Count;
 
-        public long GetMax() => _Heap[0];
+        public T GetMax() => _Heap[0].data;
 
-        public long GetMin() => _Heap.Count >= 2 ? _Heap[1] : _Heap[0];
+        public T GetMin() => _Heap.Count >= 2 ? _Heap[1].data : _Heap[0].data;
 
-        public long PopMax()
+        public T PopMax()
         {
             if (_Heap.Count == 0) throw new System.IndexOutOfRangeException();
 
@@ -46,7 +48,7 @@ namespace CompLib.DataStructure
             return ret;
         }
 
-        public long PopMin()
+        public T PopMin()
         {
             if (_Heap.Count == 0) throw new System.IndexOutOfRangeException();
 
@@ -71,7 +73,7 @@ namespace CompLib.DataStructure
         {
             for (int i = _Heap.Count; i >= 0; i--)
             {
-                if ((i & 1) != 0 && _Heap[i - 1] < _Heap[i])
+                if ((i & 1) != 0 && _Heap[i - 1].key < _Heap[i].key)
                 {
                     (_Heap[i - 1], _Heap[i]) = (_Heap[i], _Heap[i - 1]);
                 }
@@ -82,7 +84,7 @@ namespace CompLib.DataStructure
 
         private int Up(int k, int root = 1)
         {
-            if ((k | 1) < _Heap.Count && _Heap[k & ~1] < _Heap[k | 1])
+            if ((k | 1) < _Heap.Count && _Heap[k & ~1].key < _Heap[k | 1].key)
             {
                 (_Heap[k & ~1], _Heap[k | 1]) = (_Heap[k | 1], _Heap[k & ~1]);
                 k ^= 1;
@@ -90,13 +92,13 @@ namespace CompLib.DataStructure
 
             int p;
             // max _Heap
-            while (root < k && _Heap[p = Parent(k)] < _Heap[k])
+            while (root < k && _Heap[p = Parent(k)].key < _Heap[k].key)
             {
                 (_Heap[p], _Heap[k]) = (_Heap[k], _Heap[p]);
                 k = p;
             }
             // min _Heap
-            while (root < k && _Heap[p = Parent(k) | 1] > _Heap[k])
+            while (root < k && _Heap[p = Parent(k) | 1].key > _Heap[k].key)
             {
                 (_Heap[p], _Heap[k]) = (_Heap[k], _Heap[p]);
                 k = p;
@@ -114,12 +116,12 @@ namespace CompLib.DataStructure
                 while (2 * k + 1 < n)
                 {
                     int c = 2 * k + 3;
-                    if (c >= n || _Heap[c - 2] < _Heap[c])
+                    if (c >= n || _Heap[c - 2].key < _Heap[c].key)
                     {
                         c -= 2;
                     }
 
-                    if (c < n && _Heap[c] < _Heap[k])
+                    if (c < n && _Heap[c].key < _Heap[k].key)
                     {
                         (_Heap[c], _Heap[k]) = (_Heap[k], _Heap[c]);
                         k = c;
@@ -136,12 +138,12 @@ namespace CompLib.DataStructure
                 while (2 * k + 2 < n)
                 {
                     int c = 2 * k + 4;
-                    if (c >= n || _Heap[c - 2] > _Heap[c])
+                    if (c >= n || _Heap[c - 2].key > _Heap[c].key)
                     {
                         c -= 2;
                     }
 
-                    if (c < n && _Heap[c] > _Heap[k])
+                    if (c < n && _Heap[c].key > _Heap[k].key)
                     {
                         (_Heap[c], _Heap[k]) = (_Heap[k], _Heap[c]);
                         k = c;

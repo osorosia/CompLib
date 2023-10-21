@@ -6,7 +6,7 @@ public class PriorityQueueTest
     public void PriorityQueue_Long_Test()
     {
         {
-            var pq = new PriorityQueue();
+            var pq = new PriorityQueue<long>(x => x);
 
             var arr = new[] { 1, 2, 3, 4, 5 };
             foreach (var i in arr) pq.Push(i);
