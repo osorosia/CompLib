@@ -7,5 +7,6 @@ tasks:
     cmds:
       - task: test
   test:
+    aliases: [t]
     cmds:
       - dotnet test --nologo
