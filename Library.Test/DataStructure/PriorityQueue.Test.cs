@@ -9,8 +9,8 @@ public class PriorityQueueTest
             var pq = new PriorityQueue<long>(x => x);
 
             var arr = new[] { 1, 2, 3, 4, 5 };
-            foreach (var i in arr) pq.Push(i);
 
+            foreach (var i in arr) pq.Push(i);
             Assert.Equal(5, pq.PopMax());
             Assert.Equal(4, pq.PopMax());
             Assert.Equal(3, pq.PopMax());
@@ -27,7 +27,6 @@ public class PriorityQueueTest
             Assert.False(pq.Any());
 
             foreach (var i in arr.Reverse()) pq.Push(i);
-
             Assert.Equal(5, pq.PopMax());
             Assert.Equal(4, pq.PopMax());
             Assert.Equal(3, pq.PopMax());
